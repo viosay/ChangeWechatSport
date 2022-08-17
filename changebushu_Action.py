@@ -106,7 +106,7 @@ def get_app_token(login_token):
     return app_token
 
 def ding_push(content):
-    if false:
+    if 0 == 1:
        return "ding push close"
     timestamp = get_time()
     access_token = ding_access_token
