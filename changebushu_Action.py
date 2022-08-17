@@ -1,5 +1,9 @@
 import requests, time, re, json, os
 from random import randint
+import hmac
+import hashlib
+import base64
+import urllib.parse
  
 headers = {
     'User-Agent': 'Dalvik/2.1.0 (Linux; U; Android 9; MI 6 MIUI/20.6.18)'
@@ -81,6 +85,7 @@ def main():
     response = requests.post(url, data=data, headers=head).json()
     result = response['message'] + f"修改步数: {step}  " 
     print(result)
+    ding_push(result)
     return result
  
 
@@ -98,6 +103,24 @@ def get_app_token(login_token):
     print("app_token获取成功")
     return app_token
 
+def ding_push(content):
+    timestamp = get_time()
+    access_token = ding_access_token
+    secret = ding_secret
+    secret_enc = secret.encode('utf-8')
+    string_to_sign = '{}\n{}'.format(timestamp, secret)
+    string_to_sign_enc = string_to_sign.encode('utf-8')
+    hmac_code = hmac.new(secret_enc, string_to_sign_enc, digestmod=hashlib.sha256).digest()
+    sign = urllib.parse.quote_plus(base64.b64encode(hmac_code))
+    url = f"https://oapi.dingtalk.com/robot/send?access_token={access_token}&timestamp={timestamp}&sign={sign}"
+    headers = {
+        "Content-Type": "application/json;charset=UTF-8",
+    }
+    data = "{\"at\":{\"isAtAll\":true},\"msgtype\":\"text\",\"text\":{\"content\":\""+content+"\"}}".encode('utf-8')
+    response = requests.post(url, data=data, headers=headers).json()
+    if response["errcode"] != 0:
+        print("钉钉推送失败")
+        return "ding push fail"
  
 def main_handler(event, context):
     return main()
@@ -109,4 +132,6 @@ if __name__ == "__main__":
     step = str(randint(int(os.environ['STEP_MIN']), int(os.environ['STEP_MAX'])))
     # step = os.environ['STEP']
     # step = str(randint(10123, 12302)) 
+    ding_access_token = os.environ['DING_ACCESS_TOKEN']
+    ding_secret = os.environ['DING_SECRET']
     main()
