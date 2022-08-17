@@ -116,7 +116,7 @@ def ding_push(content):
     headers = {
         "Content-Type": "application/json;charset=UTF-8",
     }
-    data = "{\"at\":{\"isAtAll\":true},\"msgtype\":\"text\",\"text\":{\"content\":\""+content+"\"}}".encode('utf-8')
+    data = ("{\"at\":{\"isAtAll\":true},\"msgtype\":\"text\",\"text\":{\"content\":\""+content+"\"}}").encode('utf-8')
     response = requests.post(url, data=data, headers=headers).json()
     if response["errcode"] != 0:
         print("钉钉推送失败")
