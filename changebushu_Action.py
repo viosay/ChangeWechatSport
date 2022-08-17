@@ -55,10 +55,12 @@ def login(user, password):
  
 
 def main():
+    ding_push("开始修改步数")
     login_token = 0
     login_token, userid = login(user, password)
     if login_token == 0:
         print("登陆失败")
+        ding_push("登陆失败")
         return "login fail"
 
     t = get_time()
