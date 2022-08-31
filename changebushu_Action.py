@@ -54,7 +54,7 @@ def login(user, password):
     return login_token, userid
  
 
-def main():
+def main(user):
     ding_push("开始修改步数")
     login_token = 0
     login_token, userid = login(user, password)
@@ -87,7 +87,7 @@ def main():
     response = requests.post(url, data=data, headers=head).json()
     result = response['message'] + f"修改步数: {step}  " 
     print(result)
-    ding_push(result)
+    ding_push(user + "=>" +result)
     return result
  
 
@@ -131,11 +131,13 @@ def main_handler(event, context):
  
  
 if __name__ == "__main__":
-    user = os.environ['USER_PHONE']
+    users = os.environ['USER_PHONE']
     password = os.environ['USER_PWD']
     step = str(randint(int(os.environ['STEP_MIN']), int(os.environ['STEP_MAX'])))
     # step = os.environ['STEP']
     # step = str(randint(10123, 12302)) 
     ding_access_token = os.environ['DING_ACCESS_TOKEN']
     ding_secret = os.environ['DING_SECRET']
-    main()
+    user_list = users.split('#')
+    for user in user_list:
+        main(user)
