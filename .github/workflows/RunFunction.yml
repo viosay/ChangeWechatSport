@@ -50,7 +50,7 @@ jobs:
         run: pip install -r ./requirements.txt
 
       - name: darkkar签到
-        run: python3 changebushu_Action.py
+        run: python3 darkkar_Action.py
         env:
           DING_ACCESS_TOKEN: ${{ secrets.DING_ACCESS_TOKEN }}
           DING_SECRET: ${{ secrets.DING_SECRET }}
