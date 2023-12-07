@@ -5,6 +5,7 @@ import os
 import urllib
 
 import requests
+import json
 
 
 def v2ray_sign():
@@ -17,7 +18,7 @@ def v2ray_sign():
     return_response = requests.post(sign_url, headers=headers, allow_redirects=False)
     response_text = return_response.text.encode('utf-8').decode('unicode_escape')
     print(response_text)
-    ding_push(response_text)
+    ding_push(json.dumps(response_text))
 
 
 headers = {
