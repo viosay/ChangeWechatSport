@@ -15,9 +15,8 @@ def v2ray_sign():
     }
     sign_url = "https://go.runba.cyou/user/checkin"
     return_response = requests.post(sign_url, headers=headers, allow_redirects=False)
-    response_text = return_response.text.encode('utf-8').decode('unicode_escape')
-    print(response_text)
-    ding_push(response_text)
+    print(return_response.text)
+    ding_push(return_response.text)
 
 
 headers = {
@@ -43,7 +42,7 @@ def ding_push(content):
     headers = {
         "Content-Type": "application/json;charset=UTF-8",
     }
-    data = ("{\"at\":{\"isAtAll\":true},\"msgtype\":\"text\",\"text\":{\"content\":\"" + content + "\"}}").encode(
+    data = ("{\"at\":{\"isAtAll\":true},\"msgtype\":\"text\",\"text\":{\"content\":" + content + "}}").encode(
         'utf-8')
     response = requests.post(url, data=data, headers=headers).json()
     print(response.txt)
