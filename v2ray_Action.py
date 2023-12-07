@@ -5,7 +5,6 @@ import os
 import urllib
 
 import requests
-import json
 
 
 def v2ray_sign():
@@ -18,7 +17,7 @@ def v2ray_sign():
     return_response = requests.post(sign_url, headers=headers, allow_redirects=False)
     response_text = return_response.text.encode('utf-8').decode('unicode_escape')
     print(response_text)
-    ding_push(json.dumps(response_text))
+    ding_push(response_text)
 
 
 headers = {
@@ -47,6 +46,7 @@ def ding_push(content):
     data = ("{\"at\":{\"isAtAll\":true},\"msgtype\":\"text\",\"text\":{\"content\":\"" + content + "\"}}").encode(
         'utf-8')
     response = requests.post(url, data=data, headers=headers).json()
+    print(response.txt)
     if response["errcode"] != 0:
         print("钉钉推送失败")
 
