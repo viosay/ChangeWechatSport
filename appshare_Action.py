@@ -10,9 +10,10 @@ import requests
 
 def appshare_sign():
     timestamp = get_time()
-    timestamp_short = int(int(timestamp) / 1000)
+    timestamp_short = int((int(timestamp) / 1000) + (8 * 60 * 60))
     time_struct = time.localtime(timestamp_short)
     formatted_time = time.strftime("%Y%m%d%H%M", time_struct)
+    print(formatted_time)
     md5 = hashlib.md5()
     md5.update((appshare_token + formatted_time).encode('utf-8'))
     sign = md5.hexdigest().upper()
