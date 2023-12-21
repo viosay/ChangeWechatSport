@@ -149,4 +149,5 @@ jobs:
         env:
           DING_ACCESS_TOKEN: ${{ secrets.DING_ACCESS_TOKEN }}
           DING_SECRET: ${{ secrets.DING_SECRET }}
-          WEILAIGPT_TOKEN: ${{ secrets.WEILAIGPT_TOKEN }}
+          WEILAIGPT_USER: ${{ secrets.WEILAIGPT_USER }}
+          WEILAIGPT_PASS: ${{ secrets.WEILAIGPT_PASS }}
