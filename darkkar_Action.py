@@ -69,11 +69,9 @@ def ding_push(content):
 
 
 def main():
-    ding_push('暂时不执行Darkkar任务')
-    '''
+    # ding_push('暂时不执行Darkkar任务')
     darkkar_sign()
     darkkar_notic()
-    '''
 
 def main_handler(event, context):
     return main()
