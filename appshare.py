@@ -6,10 +6,33 @@ import time
 
 import requests
 
+def appshare_flag():
+    timestamp = get_time()
+    timestamp_short = int((int(timestamp) / 1000))
+    # timestamp_short = int((int(timestamp) / 1000) + (8 * 60 * 60))
+    time_struct = time.localtime(timestamp_short)
+    formatted_time = time.strftime("%Y%m%d%H%M", time_struct)
+    print(formatted_time)
+    md5 = hashlib.md5()
+    md5.update((appshare_token + formatted_time).encode('utf-8'))
+    sign = md5.hexdigest().upper()
+    flag_api = 'user/v1/fragmentMeData'
+    api_sign = f"{flag_api}:{sign}:{timestamp}"
+    headers = {
+        'Content-Type': 'application/json',
+        'User-Agent': 'okhttp/4.12.0',
+        'Host': 'app.sharess.cn',
+        'api_sign': api_sign
+    }
+    flag_url = f"https://app.sharess.cn/{flag_api}?token={appshare_token}&oaid={appshare_token}&sign={sign}"
+    return_response = requests.post(flag_url, headers=headers, allow_redirects=False)
+    print(return_response.text)
 
 def appshare_sign():
+    appshare_flag()
     timestamp = get_time()
-    timestamp_short = int((int(timestamp) / 1000) + (8 * 60 * 60))
+    timestamp_short = int((int(timestamp) / 1000))
+    # timestamp_short = int((int(timestamp) / 1000) + (8 * 60 * 60))
     time_struct = time.localtime(timestamp_short)
     formatted_time = time.strftime("%Y%m%d%H%M", time_struct)
     print(formatted_time)
@@ -71,5 +94,5 @@ def main_handler(event, context):
 if __name__ == '__main__':
     ding_access_token = ''
     ding_secret = ''
-    appshare_token = 'EF500D24F12DA53C1724855D7E3B57F4'
+    appshare_token = 'A788E9FFFC531904C9942498BDDE5299'
     main()
