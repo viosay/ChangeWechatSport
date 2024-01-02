@@ -9,6 +9,7 @@ import requests
 
 
 def appshare_flag():
+    version_code = f"{appshare_version_code}34"
     timestamp = get_time()
     # timestamp_short = int((int(timestamp) / 1000))
     # 服务器时区转换
@@ -17,9 +18,9 @@ def appshare_flag():
     formatted_time = time.strftime("%Y%m%d%H%M", time_struct)
     print(formatted_time)
     md5 = hashlib.md5()
-    md5.update((appshare_token + formatted_time).encode('utf-8'))
+    md5.update((appshare_token + version_code + formatted_time).encode('utf-8'))
     sign = md5.hexdigest().upper()
-    flag_api = 'user/v1/fragmentMeData'
+    flag_api = 'user/login/v1/launchApp2'
     api_sign = f"{flag_api}:{sign}:{timestamp}"
     headers = {
         'Content-Type': 'application/json',
@@ -27,8 +28,9 @@ def appshare_flag():
         'Host': 'app.sharess.cn',
         'api_sign': api_sign
     }
-    flag_url = f"https://app.sharess.cn/{flag_api}?token={appshare_token}&oaid={appshare_token}&sign={sign}"
-    return_response = requests.post(flag_url, headers=headers, allow_redirects=False)
+    flag_url = (f"https://app.sharess.cn/{flag_api}?token={appshare_token}&oaid={appshare_token}&sign={sign}"
+                f"&versionCode={appshare_version_code}&deviceSdk=34")
+    return_response = requests.get(flag_url, headers=headers, allow_redirects=False)
     print(return_response.text)
 
 def appshare_sign():
@@ -99,4 +101,5 @@ if __name__ == '__main__':
     ding_access_token = os.environ['DING_ACCESS_TOKEN']
     ding_secret = os.environ['DING_SECRET']
     appshare_token = os.environ['APPSHARE_TOKEN']
+    appshare_version_code = os.environ['APPSHARE_VERSION_CODE']
     main()
