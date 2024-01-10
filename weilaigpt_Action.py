@@ -60,7 +60,7 @@ def ding_push(content):
 
 
 def main():
-    weilaigpt_sign()
+    # weilaigpt_sign()
 
 
 def main_handler(event, context):
