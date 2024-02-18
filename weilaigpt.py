@@ -78,7 +78,7 @@ def main_handler(event, context):
 if __name__ == '__main__':
     ding_access_token = ''
     ding_secret = ''
-    weilaigpt_user = '15083122397'
-    weilaigpt_pass = 'zxczxc'
+    weilaigpt_user = ''
+    weilaigpt_pass = ''
     authorization = 'Basic c2FiZXI6c2FiZXJfc2VjcmV0'
     main()
