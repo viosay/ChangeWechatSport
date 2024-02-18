@@ -11,20 +11,23 @@ def get_weilaigpt_token():
     login_headers = {
         'Content-Type': 'application/json',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
-        'Host': 'api.thisonegpt.com',
+        'Host': 'pc.weilaigpt.cn',
+        'Referer': 'https://pc.weilaigpt.cn/v2/pages/garbage/login/login',
+        'Authorization': authorization
     }
-    login_url = "https://api.thisonegpt.com/sqx_fast/app/Login/registerCode?phone=" + weilaigpt_user + "&password=" + weilaigpt_pass
+    login_url = "https://pc.weilaigpt.cn/api/blade-auth/oauth/token?tenantId=000000&grant_type=password&username=" + weilaigpt_user + "&password=" + weilaigpt_pass
     login_response = requests.post(login_url, headers=login_headers, allow_redirects=False)
-    return login_response.json()['token']
+    return login_response.json()['access_token']
 
 def weilaigpt_sign():
     headers = {
         'Content-Type': 'application/json',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
-        'Token': get_weilaigpt_token()
+        'Blade-Auth': "bearer " + get_weilaigpt_token(),
+        'Authorization': authorization
     }
-    sign_url = "https://pc.weilaigpt.cn/sqx_fast/app/integral/signIn"
-    return_response = requests.get(sign_url, headers=headers, allow_redirects=False)
+    sign_url = "https://pc.weilaigpt.cn/api/user-center/token-info/sign"
+    return_response = requests.post(sign_url, headers=headers, allow_redirects=False)
     print(return_response.text)
     ding_push(return_response.text)
 
@@ -60,7 +63,7 @@ def ding_push(content):
 
 
 def main():
-    # weilaigpt_sign()
+    weilaigpt_sign()
 
 
 def main_handler(event, context):
@@ -72,4 +75,5 @@ if __name__ == '__main__':
     ding_secret = os.environ['DING_SECRET']
     weilaigpt_user = os.environ['WEILAIGPT_USER']
     weilaigpt_pass = os.environ['WEILAIGPT_PASS']
+    authorization = os.environ['WEILAIGPT_AUTHORIZATION']
     main()
