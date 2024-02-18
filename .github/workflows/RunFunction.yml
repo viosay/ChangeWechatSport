@@ -152,3 +152,4 @@ jobs:
           DING_SECRET: ${{ secrets.DING_SECRET }}
           WEILAIGPT_USER: ${{ secrets.WEILAIGPT_USER }}
           WEILAIGPT_PASS: ${{ secrets.WEILAIGPT_PASS }}
+          WEILAIGPT_AUTHORIZATION: ${{ secrets.WEILAIGPT_AUTHORIZATION }}
