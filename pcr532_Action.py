@@ -5,6 +5,7 @@ import os
 import urllib
 
 import requests
+from datetime import datetime
 
 
 def pcr532_sign():
@@ -29,9 +30,13 @@ headers = {
 
 
 def get_time():
-    url = 'http://api.m.taobao.com/rest/api3.do?api=mtop.common.getTimestamp'
+    # url = 'http://api.m.taobao.com/rest/api3.do?api=mtop.common.getTimestamp'
+    url = 'https://worldtimeapi.org/api/timezone/Asia/ShangHai'
     response = requests.get(url, headers=headers).json()
-    t = response['data']['t']
+    # t = response['data']['t']
+    utc_time_str = response['utc_datetime']
+    utc_time = datetime.fromisoformat(utc_time_str.replace("Z", "+00:00"))
+    t = int(utc_time.timestamp() * 1000)
     return t
 
 
