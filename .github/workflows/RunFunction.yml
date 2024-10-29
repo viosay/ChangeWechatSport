@@ -129,27 +129,27 @@ jobs:
 #          APPSHARE_TOKEN: ${{ secrets.APPSHARE_TOKEN }}
 #          APPSHARE_VERSION_CODE: ${{ secrets.APPSHARE_VERSION_CODE }}
 
-  WeilaiGPT:
-    runs-on: ubuntu-latest
-    # if: github.event.repository.owner.id == github.event.sender.id
-    # if: github.event.workflow_run.conclusion == 'success'
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
+  # WeilaiGPT:
+  #   runs-on: ubuntu-latest
+  #   # if: github.event.repository.owner.id == github.event.sender.id
+  #   # if: github.event.workflow_run.conclusion == 'success'
+  #   steps:
+  #     - name: checkout
+  #       uses: actions/checkout@v2
 
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.9
+  #     - name: Set up Python 3.9
+  #       uses: actions/setup-python@v1
+  #       with:
+  #         python-version: 3.9
 
-      - name: 安装环境
-        run: pip install -r ./requirements.txt
+  #     - name: 安装环境
+  #       run: pip install -r ./requirements.txt
 
-      - name: weilaigpt签到
-        run: python3 weilaigpt_Action.py
-        env:
-          DING_ACCESS_TOKEN: ${{ secrets.DING_ACCESS_TOKEN }}
-          DING_SECRET: ${{ secrets.DING_SECRET }}
-          WEILAIGPT_USER: ${{ secrets.WEILAIGPT_USER }}
-          WEILAIGPT_PASS: ${{ secrets.WEILAIGPT_PASS }}
-          WEILAIGPT_AUTHORIZATION: ${{ secrets.WEILAIGPT_AUTHORIZATION }}
+  #     - name: weilaigpt签到
+  #       run: python3 weilaigpt_Action.py
+  #       env:
+  #         DING_ACCESS_TOKEN: ${{ secrets.DING_ACCESS_TOKEN }}
+  #         DING_SECRET: ${{ secrets.DING_SECRET }}
+  #         WEILAIGPT_USER: ${{ secrets.WEILAIGPT_USER }}
+  #         WEILAIGPT_PASS: ${{ secrets.WEILAIGPT_PASS }}
+  #         WEILAIGPT_AUTHORIZATION: ${{ secrets.WEILAIGPT_AUTHORIZATION }}
