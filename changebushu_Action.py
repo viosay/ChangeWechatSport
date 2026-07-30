@@ -29,9 +29,6 @@ def login(user, password):
         "token": "access"
     }
     r1 = requests.post(url1, data=data1, headers=headers, allow_redirects=False)
-    print("status_code:", r1.status_code)
-    print("headers:", dict(r1.headers))
-    print("response:", r1.text)
     location = r1.headers["Location"]
     try:
         code = get_code(location)
